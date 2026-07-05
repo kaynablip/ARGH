@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Plate — Calorie Tracker</title>
+  
+  <!-- Manifest and Theme Meta -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#003893">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/icon.svg">
+  
+  <!-- Tailwind CSS not used, custom design system in index.css -->
+  <link rel="stylesheet" href="/src/index.css">
+</head>
+<body>
+  
+  <!-- Global Paper Grain Overlay -->
+  <div class="noise-overlay" id="grain-filter"></div>
+  
+  <!-- Main Application Container -->
+  <div class="app-container">
+    
+    <!-- GREETINGS BAR (Shared between Home & Screens) -->
+    <header class="header-greet" id="main-header">
+      <div id="greeting-text" class="editorial-title" style="font-size: 2.8rem; color: var(--text-navy);">good morning, kayna</div>
+    </header>
+
+    <!-- ==================== SCREEN 1: HOME SCREEN ==================== -->
+    <main id="home-screen" class="screen active">
+      <div class="home-grid">
+        <!-- Hero Column -->
+        <section class="sticky-col">
+          <!-- Calorie Dinner Plate Widget -->
+          <div id="plate-widget-placeholder"></div>
+          
+          <!-- Protein Stack Bar -->
+          <div id="protein-widget-placeholder"></div>
+        </section>
+        
+        <!-- Log Column -->
+        <section>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h2 class="editorial-title" style="font-size: 1.5rem;">today's meals</h2>
+          </div>
+          
+          <!-- Logged Meal Row Cards -->
+          <div class="meal-list" id="meal-list-placeholder"></div>
+          
+          <!-- CTA Add Food Trigger Button -->
+          <button class="btn-primary" id="add-food-hero-btn" style="margin-bottom: 2.5rem;">
+            <div class="plus-circle">+</div>
+            <span>add food</span>
+          </button>
+          
+          <!-- Friendly Meal Recommendations -->
+          <h2 class="editorial-title" style="margin-bottom: 0.5rem; font-size: 1.5rem;">ideas</h2>
+          <div id="home-recommendations-placeholder"></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- ==================== SCREEN 2: FOOD SEARCH SCREEN ==================== -->
+    <section id="search-screen" class="screen">
+      <h1 class="editorial-title" style="margin-bottom: 1rem;">add food</h1>
+      
+      <!-- Real-time search query input -->
+      <div class="search-input-wrapper">
+        <div class="search-icon-decor">
+          <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2.5" fill="none">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </div>
+        <input type="text" class="search-input" id="food-search-bar" placeholder="search roti, dal, paneer, apple...">
+      </div>
+
+      <!-- Custom Dish Trigger Button -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+        <button class="btn-primary" id="create-dish-trigger-btn" style="padding: 0.6rem 1.2rem; font-size: 0.9rem; border-radius: 15px; width: auto; box-shadow: none; background-color: var(--text-brown); margin: 0;">
+          + build custom dish
+        </button>
+      </div>
+
+      <!-- Categories Filter Slider -->
+      <div class="categories-slider" id="search-categories-slider"></div>
+
+      <!-- Search results grid -->
+      <div class="food-grid" id="food-grid-placeholder"></div>
+    </section>
+
+    <!-- ==================== SCREEN 3: INSIGHTS & STATS SCREEN ==================== -->
+    <section id="insights-screen" class="screen">
+      <h1 class="editorial-title" style="margin-bottom: 1.5rem;">insights</h1>
+      
+      <!-- Active streak widgets -->
+      <div id="insights-streak-placeholder"></div>
+
+      <!-- Custom SVG bar chart card -->
+      <div class="insight-card">
+        <h3 class="editorial-title" style="font-size: 1.2rem; margin-bottom: 1rem;">weekly calories</h3>
+        <div class="chart-container" id="insights-weekly-chart-placeholder"></div>
+      </div>
+
+      <!-- Calendar heatmap card -->
+      <div class="insight-card" id="insights-heatmap-placeholder"></div>
+    </section>
+
+    <!-- ==================== SCREEN 4: IDEAS DEDICATED SCREEN ==================== -->
+    <section id="ideas-screen" class="screen">
+      <h1 class="editorial-title" style="margin-bottom: 1rem;">meal suggestions</h1>
+      <p style="margin-bottom: 1.5rem; font-size: 0.95rem; color: var(--text-brown);">Guilt-free suggestions matching your remaining calorie goal. Add what sounds tasty!</p>
+      <div id="ideas-screen-placeholder"></div>
+    </section>
+
+    <!-- ==================== SCREEN 5: FOOD HISTORY CALENDAR SCREEN ==================== -->
+    <section id="history-screen" class="screen">
+      <h1 class="editorial-title" style="margin-bottom: 1rem;">food history</h1>
+      
+      <!-- Date slider header -->
+      <div class="history-date-header">
+        <button class="history-nav-btn" id="history-prev-day-btn">←</button>
+        <span class="editorial-title history-date-title" id="history-selected-date-title">july 5, 2026</span>
+        <button class="history-nav-btn" id="history-next-day-btn">→</button>
+      </div>
+
+      <!-- Mini plate review -->
+      <div id="history-plate-placeholder"></div>
+
+      <!-- Historical meal listing -->
+      <div class="meal-list" id="history-meals-list-placeholder" style="margin-top: 1.5rem;"></div>
+    </section>
+
+    <!-- ==================== SCREEN 6: PROFILE & SYNC SETTINGS ==================== -->
+    <section id="settings-screen" class="screen">
+      <h1 class="editorial-title" style="margin-bottom: 1.5rem;">settings</h1>
+
+      <!-- User Goals Segment -->
+      <div class="settings-section">
+        <h3 class="editorial-title" style="font-size: 1.2rem; margin-bottom: 1rem;">your profile goals</h3>
+        <div class="settings-row">
+          <label class="serving-label">profile name</label>
+          <input type="text" class="settings-input" id="settings-profile-name" placeholder="Name">
+        </div>
+        <div class="settings-row">
+          <label class="serving-label">daily calorie goal (kcal)</label>
+          <input type="number" class="settings-input" id="settings-calorie-goal" placeholder="1800">
+        </div>
+        <div class="settings-row">
+          <label class="serving-label">daily protein goal (grams)</label>
+          <input type="number" class="settings-input" id="settings-protein-goal" placeholder="90">
+        </div>
+        <button class="btn-primary" id="save-profile-settings-btn" style="margin-top: 0.5rem; padding: 0.6rem 1.5rem; font-size: 1rem; border-radius: 12px; width: auto; box-shadow: none;">
+          save profile
+        </button>
+      </div>
+
+      <!-- Supabase sync connection segment -->
+      <div class="settings-section">
+        <h3 class="editorial-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">supabase sync</h3>
+        <p style="font-size: 0.8rem; color: var(--text-brown); margin-bottom: 1rem;">Sync goals, profile updates, and meal lists automatically. Operates fully offline first if empty.</p>
+        
+        <div class="settings-row">
+          <label class="serving-label">supabase project url</label>
+          <input type="url" class="settings-input" id="settings-supabase-url" placeholder="https://xxxx.supabase.co">
+        </div>
+        <div class="settings-row">
+          <label class="serving-label">supabase anon public key</label>
+          <input type="password" class="settings-input" id="settings-supabase-key" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...">
+        </div>
+        
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 0.8rem;">
+          <button class="btn-primary" id="connect-supabase-settings-btn" style="padding: 0.6rem 1.5rem; font-size: 1rem; border-radius: 12px; width: auto; box-shadow: none; background-color: var(--text-brown);">
+            connect sync
+          </button>
+          <div id="settings-sync-status-box"></div>
+        </div>
+      </div>
+
+      <!-- Mobile/Lockscreen widgets simulation panel -->
+      <div id="settings-widgets-placeholder"></div>
+    </section>
+
+    <!-- BOTTOM APP NAVIGATION BAR (Mobile layout) / SIDEBAR (Desktop layout) -->
+    <nav class="nav-bar">
+      <a href="#" class="nav-item active" data-tab="home">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+        <span>home</span>
+      </a>
+      <a href="#" class="nav-item" data-tab="insights">
+        <svg viewBox="0 0 24 24">
+          <path d="M10 20h4V4h-4v16zm-6 0h4v-8H4v8zM16 9v11h4V9h-4z"/>
+        </svg>
+        <span>insights</span>
+      </a>
+      <a href="#" class="nav-item" data-tab="ideas">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7zm2.85 11.1l-.85.6V16h-4v-2.3l-.85-.6C7.8 12.16 7 10.63 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.63-.8 3.16-2.15 4.1z"/>
+        </svg>
+        <span>ideas</span>
+      </a>
+      <a href="#" class="nav-item" data-tab="history">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z"/>
+        </svg>
+        <span>history</span>
+      </a>
+      <a href="#" class="nav-item" data-tab="settings">
+        <svg viewBox="0 0 24 24">
+          <path d="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61 l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41 h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87 c-0.12,0.21-0.08,0.47,0.12,0.61l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12c0,0.32,0.02,0.64,0.07,0.94l-2.03,1.58 c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54 c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96 c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6 s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/>
+        </svg>
+        <span>settings</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- ==================== POPUP 1: FOOD LOGGING MODAL OVERLAY ==================== -->
+  <div class="modal-overlay" id="logging-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="editorial-title" id="logging-food-name" style="font-size: 1.8rem; max-width: 80%;">Tomato</h2>
+        <button class="modal-close" id="close-log-modal-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- Quantity adjustment and standard household measures -->
+      <div class="serving-selector">
+        <div class="serving-input-box">
+          <span class="serving-label">quantity</span>
+          <input type="number" class="serving-input" id="logging-qty-input" value="1" min="0.1" step="0.5">
+        </div>
+        <div class="serving-input-box">
+          <span class="serving-label">measurement unit</span>
+          <select class="serving-select" id="logging-unit-select"></select>
+        </div>
+      </div>
+
+      <!-- Meal slot selector -->
+      <span class="serving-label" style="display: block; margin-bottom: 0.3rem;">add to meal</span>
+      <div class="meal-type-selector">
+        <button class="meal-type-btn active" data-meal="breakfast">breakfast</button>
+        <button class="meal-type-btn" data-meal="lunch">lunch</button>
+        <button class="meal-type-btn" data-meal="dinner">dinner</button>
+        <button class="meal-type-btn" data-meal="snacks">snacks</button>
+      </div>
+
+      <!-- Dynamic nutritional macro preview -->
+      <span class="serving-label" style="display: block; margin-bottom: 0.3rem;">macros preview</span>
+      <div class="macro-preview">
+        <div class="macro-item">
+          <span class="macro-val" id="preview-cals" style="color: var(--text-navy);">120 kcal</span>
+          <span class="macro-lbl">calories</span>
+        </div>
+        <div class="macro-item">
+          <span class="macro-val" id="preview-protein" style="color: var(--accent-green);">4.5g</span>
+          <span class="macro-lbl">protein</span>
+        </div>
+        <div class="macro-item">
+          <span class="macro-val" id="preview-carbs" style="color: var(--text-brown);">12g</span>
+          <span class="macro-lbl">carbs</span>
+        </div>
+        <div class="macro-item">
+          <span class="macro-val" id="preview-fat" style="color: var(--text-brown);">0.8g</span>
+          <span class="macro-lbl">fats</span>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button class="btn-primary" id="submit-food-log-btn">log to plate</button>
+    </div>
+  </div>
+
+  <!-- ==================== POPUP 2: MEAL LOGGED ITEMS EDITOR OVERLAY ==================== -->
+  <div class="modal-overlay" id="meal-editor-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="editorial-title" id="meal-editor-title" style="font-size: 1.8rem;">logged breakfast</h2>
+        <button class="modal-close" id="close-meal-editor-btn" aria-label="Close modal">&times;</button>
+      </div>
+      
+      <!-- List of items logged for this meal with delete buttons -->
+      <div id="meal-editor-items-list" style="margin-bottom: 1.5rem; max-height: 250px; overflow-y: auto;"></div>
+      
+      <!-- Close panel trigger -->
+      <button class="btn-primary" onclick="document.getElementById('meal-editor-overlay').classList.remove('active')" style="background-color: var(--text-brown); font-size: 1rem; padding: 0.75rem;">Done</button>
+    </div>
+  </div>
+
+  <!-- ==================== POPUP 3: CREATE CUSTOM DISH OVERLAY ==================== -->
+  <div class="modal-overlay" id="custom-dish-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="editorial-title" style="font-size: 1.8rem;">build custom dish</h2>
+        <button class="modal-close" id="close-custom-dish-btn" aria-label="Close modal">&times;</button>
+      </div>
+
+      <!-- Dish Name -->
+      <div class="settings-row" style="margin-bottom: 1.2rem;">
+        <label class="serving-label">dish name</label>
+        <input type="text" class="settings-input" id="custom-dish-name" placeholder="e.g. My Protein Oats Bowl">
+      </div>
+
+      <!-- Add Ingredient Selector -->
+      <div style="background-color: var(--card-bg); border: 1px solid var(--card-border); padding: 0.8rem; border-radius: 15px; margin-bottom: 1.2rem; position: relative;">
+        <span class="serving-label" style="display: block; margin-bottom: 0.3rem;">add ingredient</span>
+        <div style="display: grid; grid-template-columns: 2.2fr 1fr; gap: 0.5rem; margin-bottom: 0.5rem; position: relative;">
+          <div style="position: relative;">
+            <input type="text" class="serving-input" id="custom-dish-ingredient-search" placeholder="Search ingredient..." style="width: 100%; text-align: left; font-size: 0.85rem; padding: 0.5rem 0.8rem;">
+            <!-- Floating Suggestions Box -->
+            <div id="custom-dish-ingredient-suggestions" style="position: absolute; top: 105%; left: 0; right: 0; background-color: var(--plate-cream); border: 1px solid var(--card-border); border-radius: 10px; max-height: 150px; overflow-y: auto; z-index: 1002; display: none; box-shadow: 0 4px 15px rgba(54,30,28,0.15);"></div>
+          </div>
+          <input type="number" class="serving-input" id="custom-dish-ingredient-qty" value="1" min="0.1" step="0.5" style="font-size: 0.85rem; padding: 0.5rem;">
+        </div>
+        <button class="btn-primary" id="custom-dish-add-ingredient-btn" style="padding: 0.5rem; font-size: 0.85rem; border-radius: 8px; width: 100%; box-shadow: none; background-color: var(--text-navy);">
+          + add ingredient
+        </button>
+      </div>
+
+      <!-- List of added ingredients in this dish -->
+      <span class="serving-label">ingredients in this dish</span>
+      <div id="custom-dish-ingredients-list" style="margin-bottom: 1.2rem; max-height: 120px; overflow-y: auto; border: 1px dashed rgba(54, 30, 28, 0.1); border-radius: 10px; padding: 0.5rem;">
+        <!-- Filled dynamically -->
+      </div>
+
+      <!-- Combined macro preview -->
+      <span class="serving-label" style="display: block; margin-bottom: 0.3rem;">dish total macros</span>
+      <div class="macro-preview" style="margin-bottom: 1.5rem; background-color: var(--card-bg);">
+        <div class="macro-item">
+          <span class="macro-val" id="custom-dish-total-cals" style="color: var(--text-navy);">0 kcal</span>
+          <span class="macro-lbl">calories</span>
+        </div>
+        <div class="macro-item">
+          <span class="macro-val" id="custom-dish-total-protein" style="color: var(--accent-green);">0g</span>
+          <span class="macro-lbl">protein</span>
+        </div>
+        <div class="macro-item">
+          <span class="macro-val" id="custom-dish-total-carbs" style="color: var(--text-brown);">0g</span>
+          <span class="macro-lbl">carbs</span>
+        </div>
+        <div class="macro-item">
+          <span class="macro-val" id="custom-dish-total-fat" style="color: var(--text-brown);">0g</span>
+          <span class="macro-lbl">fats</span>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <button class="btn-primary" id="custom-dish-save-btn">save & register dish</button>
+    </div>
+  </div>
+
+  <!-- Toast Toast notifications element -->
+  <div class="toast-container" id="toast-notification">Logged to plate!</div>
+
+  <!-- Core Controller Module Script -->
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
