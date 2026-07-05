@@ -1,0 +1,45 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Warm Pink Background -->
+  <rect width="100%" height="100%" fill="#fcd4d9" />
+  
+  <!-- Group with cutlery and plate centered -->
+  <g transform="translate(256, 256)">
+    <!-- Fork (Left side) -->
+    <g transform="translate(-140, 0) scale(1.8)">
+      <!-- Fork Handle -->
+      <path d="M 0,30 L 0,85" stroke="#361e1c" stroke-width="5" stroke-linecap="round" />
+      <!-- Fork Neck & Body -->
+      <path d="M -12,5 C -12,25 12,25 12,5 Z" fill="#f5c443" />
+      <rect x="-3" y="15" width="6" height="18" fill="#f5c443" />
+      <!-- Prongs -->
+      <rect x="-12" y="-15" width="4" height="23" fill="#f5c443" rx="2" />
+      <rect x="-4" y="-15" width="4" height="23" fill="#f5c443" rx="2" />
+      <rect x="4" y="-15" width="4" height="23" fill="#f5c443" rx="2" />
+      <rect x="12" y="-15" width="4" height="23" fill="#f5c443" rx="2" />
+    </g>
+
+    <!-- Knife (Right side) -->
+    <g transform="translate(140, 0) scale(1.8)">
+      <!-- Knife Handle -->
+      <path d="M 0,30 L 0,85" stroke="#361e1c" stroke-width="8" stroke-linecap="round" />
+      <!-- Knife Blade -->
+      <path d="M 0,30 L 0,-15 C 0,-15 -12,-15 -12,0 L -12,30 Z" fill="#361e1c" />
+    </g>
+
+    <!-- Dinner Plate (Center) -->
+    <circle cx="0" cy="0" r="110" fill="#fffbf5" stroke="rgba(54,30,28,0.1)" stroke-width="2" />
+    <!-- Segment (Visual indicator) -->
+    <path d="M 0,0 L 0,-110 A 110 110 0 0 1 95,-55 Z" fill="rgba(251,194,200,0.5)" />
+
+    <!-- Food Illustration: Tomato in center -->
+    <g transform="scale(0.8)">
+      <!-- Tomato Body -->
+      <circle cx="0" cy="5" r="32" fill="#e84118" />
+      <!-- Stem -->
+      <path d="M 0,-25 C 0,-25 -4,-36 -15,-32 C -5,-28 -2,-23 -2,-23 Z" fill="#78a54a" />
+      <path d="M 0,-25 C 0,-25 4,-36 15,-32 C 5,-28 2,-23 2,-23 Z" fill="#78a54a" />
+      <path d="M 0,-25 C 0,-25 0,-40 0,-40 Z" stroke="#361e1c" stroke-width="3" stroke-linecap="round" />
+      <circle cx="-14" cy="-10" r="5" fill="#ffffff" opacity="0.3" />
+    </g>
+  </g>
+</svg>
